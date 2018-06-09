@@ -12,6 +12,7 @@ use App\Common\Enums\ErrorCode;
 use App\Common\Exceptions\BizException;
 use App\Core\System;
 use App\Utils\Response;
+use Locale;
 
 class IndexController extends Controller
 {
@@ -23,14 +24,15 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
+        $message = di('locale')->lang->welcome;
         if ($this->request->isPost()) {
-            $message = di('configCenter')->get('msg')->welcome;
             return Response::success([
                 'version' => System::getInstance()->version(),
                 'message' => $message,
             ]);
         }
         $this->view->version = System::getInstance()->version();
+        $this->view->message = $message;
         return $this->view->render('index', 'index');
     }
 

@@ -8,10 +8,24 @@
 // +----------------------------------------------------------------------
 namespace App\Controllers;
 
+use Locale;
+use App\Common\Locale as AppLocale;
+
 abstract class Controller extends \Phalcon\Mvc\Controller
 {
+    public $locale = 'zh';
+
     public function initialize()
     {
+        if ($this->request->hasHeader('ACCEPT-LANGUAGE')) {
+            $lang = $this->request->getHeader('ACCEPT_LANGUAGE');
+            $this->locale = Locale::acceptFromHttp($lang);
+        }
+
+        $locale = new AppLocale($this->locale);
+
+        $di = $this->getDI();
+        $di->setShared('locale', $locale);
     }
 
     public function beforeExecuteRoute()
