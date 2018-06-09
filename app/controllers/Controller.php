@@ -17,8 +17,8 @@ abstract class Controller extends \Phalcon\Mvc\Controller
 
     public function initialize()
     {
-        if ($this->request->hasHeader('ACCEPT-LANGUAGE')) {
-            $lang = $this->request->getHeader('ACCEPT_LANGUAGE');
+        if ($this->request->hasHeader('Accept-Language')) {
+            $lang = $this->request->getHeader('Accept-Language');
             $this->locale = Locale::acceptFromHttp($lang);
         }
 

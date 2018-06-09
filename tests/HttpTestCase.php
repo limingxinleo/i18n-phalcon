@@ -51,6 +51,7 @@ abstract class HttpTestCase extends UnitTestCase
             $arguments[0] = '?_url=' . $arguments[0];
         }
         $res = $this->client->$name(...$arguments);
-        return $res;
+        $str = $res->getBody()->getContents();
+        return json_decode($str, true);
     }
 }
